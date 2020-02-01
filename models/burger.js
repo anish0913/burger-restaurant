@@ -1,33 +1,23 @@
-//require ORM
-var orm = require("../config/orm.js");                                                                 
+// ORM connecting to database
+var orm = require("../config/orm.js");
 
-//burger variable and callback function 
 var burger = {
-    selectAll: function(callback) {                                         
-        orm.selectAll("burgers", function(res) {                            
-            callback(res);
-        });
-    },  
-
-    //insert function
-    insertOne: function (cheese, callback) {
-        orm.insertOne("burgers", "burger_name", cheese, function (buns) {
-            console.log("burgerJS cheese: ", cheese, "buns: ", buns);
-            callback(buns);
-        });
-    },
-    //update function
-    updateOne: function(colVal, id, cb) {
-        orm.updateOne(colVal, id, function(res) {
+    all: function (cb) {
+        orm.selectAll("burgers" , function (res) {
             cb(res);
         });
     },
-    //delete function
-    deleteOne: function(id, callback) {
-        orm.deleteOne(id, function(res) {
-            callback(res);
+    create: function (val, cb) {
+        orm.insertOne("burgers", "burger_name", val, function (res) {
+            cb(res);
         });
-    }
+    },
+    update: function(colVal, condition, cb) {
+        orm.updateOne("burgers", colVal, condition, function(res) {
+          cb(res);
+        });
+      },
 };
 
+// Exporting the database 
 module.exports = burger;

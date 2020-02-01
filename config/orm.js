@@ -1,39 +1,52 @@
-var connection = require("./connection.js");
-//Select All ORM
-var orm = {
-    selectAll: function(table, callback) {
-        var queryString = "SELECT * FROM ??;";
-        connection.query(queryString, [table], function(err, res) {
-            if (err) throw err;
-            callback(res);
-        });
-    },
-    //Insert 
-    insertOne: function(gryffindor, hufflepuff, ravenclaw, callback) {
-    var queryString = "INSERT INTO ?? (??) VALUES (?);"
-        connection.query(queryString, [gryffindor, hufflepuff, ravenclaw], function(err, slytherin){
-            if (err) throw err;
-        callback(slytherin);
-    });
-    },
-    //Update
-    updateOne: function(colVal, id, callback) {
-    var queryString = "UPDATE burgers SET devoured='1' WHERE " + id + ";";
-        connection.query(queryString, [id], function(err, result) {
-      
-            if (err) throw err;
-      
-        callback(result);
-        });
-    },
-    //Delete
-    deleteOne: function(id, callback) {
-        var queryString = "DELETE FROM burgers WHERE " + id + ";";
-        connection.query(queryString, [id], function(err, res) {
-            if (err) throw err;
-            callback(res);
-        });
-    },
+var connection = require("../config/connection.js");
+
+// Object value & Looping through the keys
+function dataObj(object) {
+  var array = [];
+  for (var key in object) {
+    var value = object[key];
+    if (Object.hasOwnProperty.call(object, key)) { 
+      if (typeof value === "string" && value.indexOf(" ") >= 0) {
+        value = "'" + value + "'";
+      }
+      array.push(key + "=" + value);
+    }
+  }
+  return array.toString();
 }
-//Exports ORM
+
+// ORM select all from  table 
+var orm = {
+  selectAll: function (table, cb) {
+    var queryString = "SELECT * FROM " + table + ";"
+    connection.query(queryString, function (err, response) {
+      if (err) throw err;
+      cb(response);
+    })
+
+  },
+
+  // Insert new row 
+  insertOne: function (table, col, val, cb) {
+    var queryString = "INSERT INTO " + table + '(' + col + ') VALUES ("' + val + '");'
+    connection.query(queryString, function (err, response) {
+      if (err) throw err;
+
+      cb(response);
+    })
+  },
+
+  // Updates the table
+  updateOne: function (table, colVal, condition, cb) {
+    var queryString = "UPDATE " + table + " SET " + dataObj(colVal) + " WHERE " + condition + ";"
+    connection.query(queryString, function (err, response) {
+      console.log(queryString);
+      if (err) throw err;
+
+      cb(response);
+    })
+  }
+}
+
+// Export orm object 
 module.exports = orm;
