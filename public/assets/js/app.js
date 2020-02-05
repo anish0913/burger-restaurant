@@ -1,42 +1,41 @@
 // On CLick function
 $(function () {
-    $(".changeDevoured").on("click", function (event) {
-      // Variables needed
-      var id = $(this).data("id");
-      var devouredstate = $(this).data("devouredstate");
-      var newDevouredState = {
-        devoured: devouredstate
-      };
-      // Send the PUT request.
-      $.ajax("/api/burgers/" + id, {
-        type: "PUT",
-        data: newDevouredState
-      }).then(
-        function () {
-          // Reload the page to get the updated list
-          location.reload();
-        }
-      );
-    });
-    // On Click function that creates a burger
-    $("#makeBurger").on("click", function (event) {
-      // Make sure to preventDefault on a submit event.
-      event.preventDefault();
-      // Variable for the newBurger
-      var newBurger = {
-        name: $("#newBurgerName").val().trim(),
-        devoured: false
-      };
-      // Send the POST request.
-      $.ajax("/api/burgers", {
-        type: "POST",
-        data: newBurger
-      }).then(
-        function () {
-          console.log("created New Burger");
-          // Reload the page to get the updated list
-          location.reload();
-        }
-      )
-    })
+  $(".changeBurger").on("click", function (event) {
+    var id = $(this).data("id");
+    var devouredburger = $(this).data("devouredburger");
+    var newDevouredBurger = {
+      devoured: devouredburger
+    };
+
+    // AJAX PUT request & Reloads the page
+    $.ajax("/api/burgers/" + id, {
+      type: "PUT",
+      data: newDevouredBurger
+    }).then(
+      function () {
+        location.reload();
+      }
+    );
   });
+  
+  // On Click function that creates a burger // preventDefault on a submit event
+  $("#typeOfBurger").on("click", function (event) {
+    event.preventDefault();
+
+    // New Added Burger
+    var burgerAdded = {
+      name: $("#newBurgerAdded").val().trim(),
+      devoured: false
+    };
+
+    // AJAX POST request & Reloads the page
+    $.ajax("/api/burgers", {
+      type: "POST",
+      data: burgerAdded
+    }).then(
+      function () {
+        location.reload();
+      }
+    )
+  })
+});

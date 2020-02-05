@@ -1,52 +1,45 @@
-<!--Start of the main container-->
+<!--Title-->
 <div class="container">
     <div class="col-md-12">
         <div class="jumbotron jumbotron-fluid">
-            <div class="container">
-                <h1 class="jumbo-title">Eat-Da-Burger!</h1>
-            </div>
+            <h1 class="jumbo-title">Eat-Da-Burger!</h1>
         </div>
     </div>
-    <div class="col-md-12">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Burgers To be Devoured</h4>
-                        <hr>
-                        <ul class="list-unstyled">
-                            {{#each burger}} {{#unless devoured}} {{> burgers/burger devoured=true}} {{/unless}} {{/each}}
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Burgers Devoured </h4>
-                        <hr>
-                        <ul class="list-unstyled">
-                            {{#each burger}} {{#if devoured}} {{> burgers/burger devoured=false}} {{/if}} {{/each}}
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Make A Burger</h4>
-                        <hr>
-                        <form>
-                            <div class="form-group">
-                                <h6>Type of Burger</h6>
-                                <input class="form-control" id="newBurgerName" type="text"
-                                <br>
-                                <button type="button" class="btn btn-info" id="makeBurger">Place Order</button>
-                            </div>
-                        </form>
-                    </div>
+</div>
+<!--Burger List Card-->
+<div class="col-md-12">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Burgers To be Devoured</h4>
+                    {{#each burger}} {{#unless devoured}} {{> burgers/burger devoured=true}} {{/unless}} {{/each}}
                 </div>
             </div>
         </div>
+        <!--Burgers Devoured List Card-->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Burgers Devoured </h4>
+                    {{#each burger}} {{#if devoured}} {{> burgers/burger devoured=false}} {{/if}} {{/each}}
+                </div>
+            </div>
+        </div>
+        <!--Make a Burger Card-->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Make A Burger</h4>
+                    <form>
+                        <h6>Type of Burger</h6>
+                        <input class="form" id="newBurgerAdded" type="text">
+                        <button type="button" class="btn btn-primary" id="typeOfBurger">Place Order</button>
+                </div>
+                </form>
+            </div>
+        </div>
     </div>
+</div>
+</div>
 </div>

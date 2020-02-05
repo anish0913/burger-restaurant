@@ -1,6 +1,6 @@
 var connection = require("../config/connection.js");
 
-// Object value & Looping through the keys
+// Object value & Looping through the keys. Took from stack overflow.
 function dataObj(object) {
   var array = [];
   for (var key in object) {
@@ -15,9 +15,9 @@ function dataObj(object) {
   return array.toString();
 }
 
-// ORM select all from  table 
+// Select all from  table 
 var orm = {
-  selectAll: function (table, cb) {
+  selectItems: function (table, cb) {
     var queryString = "SELECT * FROM " + table + ";"
     connection.query(queryString, function (err, response) {
       if (err) throw err;
@@ -27,7 +27,7 @@ var orm = {
   },
 
   // Insert new row 
-  insertOne: function (table, col, val, cb) {
+  insertItem: function (table, col, val, cb) {
     var queryString = "INSERT INTO " + table + '(' + col + ') VALUES ("' + val + '");'
     connection.query(queryString, function (err, response) {
       if (err) throw err;
@@ -37,7 +37,7 @@ var orm = {
   },
 
   // Updates the table
-  updateOne: function (table, colVal, condition, cb) {
+  updateItem: function (table, colVal, condition, cb) {
     var queryString = "UPDATE " + table + " SET " + dataObj(colVal) + " WHERE " + condition + ";"
     connection.query(queryString, function (err, response) {
       console.log(queryString);
@@ -46,7 +46,5 @@ var orm = {
       cb(response);
     })
   }
-}
-
-// Export orm object 
+} 
 module.exports = orm;
